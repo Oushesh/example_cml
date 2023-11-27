@@ -12,10 +12,12 @@ jobs:
       - uses: actions/setup-python@v3
         with:
           python-version: '3.x'
-      - name: Install CML
         run: npm install -g @dvcorg/cml
       - name: Train model
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          pip3 install --upgrade pip
           pip3 install -r requirements.txt
           python3 train.py
           cat metrics.txt >> report.md
